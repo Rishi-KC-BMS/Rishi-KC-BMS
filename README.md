@@ -1,3 +1,3 @@
 <p align="center">
-  ![Header GIF](assets/galaxy.gif)
+  <img src="assets/galaxy.gif" alt="Galaxy GIF">
 </p>
