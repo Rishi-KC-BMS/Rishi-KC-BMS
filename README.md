@@ -22,7 +22,7 @@
 
 <p align = "center">
     <a href = "" target = "_blank">
-        <img align = "right" src="assets/angry-megumi.gif" alt="Galaxy GIF" width = "250px">
+        <img align = "right" src="assets/angry-megumi.gif" alt="Galaxy GIF" height = "250px">
     </a>
 </p>
 
