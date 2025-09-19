@@ -1,6 +1,6 @@
 <p align = "center">
     <a href = "" target = "_blank">
-        <img align = "center" src="assets/galaxy.gif" alt="Galaxy GIF">
+        <img align = "center" src="assets/jujutsu-kaisen-banner-compressed.gif" alt="Galaxy GIF">
     </a>
 </p>
 
@@ -22,7 +22,7 @@
 
 <p align = "center">
     <a href = "" target = "_blank">
-        <img align = "right" src="assets/mew-gif.gif" alt="Galaxy GIF">
+        <img align = "right" src="assets/angry-megumi.gif" alt="Galaxy GIF" width = "250px">
     </a>
 </p>
 
