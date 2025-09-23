@@ -44,4 +44,4 @@ Aiohttp and Asyncpraw.
     </a>
 </p>
 
-
+![Snake Dark](https://raw.githubusercontent.com/Rishi-KC-BMS/Rishi-KC-BMS/output/github-contribution-grid-snake-dark.svg#gh-dark-mode-only)
