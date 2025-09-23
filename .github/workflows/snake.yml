@@ -1,0 +1,41 @@
+name: Generate Snake
+
+on:
+  schedule: # Runs once a day at midnight UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch: # Allows manual trigger
+  push: # Optional: run whenever you push to main
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Generate multiple snake SVGs
+      - name: Generate snake SVGs
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            # Default light and dark
+            dist/github-contribution-grid-snake.svg?palette=github-light
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+            # Custom-colored snake
+            dist/github-contribution-grid-snake-custom.svg?palette=#ffffff,#d0d7de,#24292f,#ff0000,#00ff00,#0000ff,#ffff00
+
+      # Step 2: Upload as artifact (optional, for debugging)
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake
+          path: dist
+
+      # Step 3: Push to output branch
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
