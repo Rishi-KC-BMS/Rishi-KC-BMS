@@ -18,11 +18,22 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            # Default light and dark
+            # Default light & dark
             dist/github-contribution-grid-snake.svg?palette=github-light
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-            # Custom-colored snake
-            dist/github-contribution-grid-snake-custom.svg?palette=#ffffff,#d0d7de,#24292f,#ff0000,#00ff00,#0000ff,#ffff00
+
+            # 🌸 Dreamy Pastel
+            dist/github-contribution-grid-snake-pastel.svg?palette=#0b0b16,#1a1a2b,#403c64,#94b3fd,#f8c8dc,#d9faff
+
+            # 🌌 Galaxy Glow
+            dist/github-contribution-grid-snake-galaxy.svg?palette=#0a0b1a,#1b1f3a,#2f3c64,#5cb8ff,#b28dff,#8fffff
+
+            # ⚡ Cyber Neon
+            dist/github-contribution-grid-snake-neon.svg?palette=#050510,#12122a,#1f3b6d,#00d8ff,#ff6ec7,#bfff00
+
+            # 🌙 Moonlight (your dark-mode theme)
+            dist/github-contribution-grid-snake-moonlight.svg?palette=#0a0b1a,#1c1e2b,#2f3c64,#6ed4ff,#c0a6ff,#9fffff
+
 
       # Step 2: Upload as artifact (optional, for debugging)
       - name: Upload artifact
