@@ -4,7 +4,7 @@ on:
   schedule: # Runs once a day at midnight UTC
     - cron: "0 0 * * *"
   workflow_dispatch: # Allows manual trigger
-  push: # Optional: run whenever you push to main
+  push: 
     branches:
       - main
 
@@ -12,37 +12,50 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Generate multiple snake SVGs
-      - name: Generate snake SVGs
-        uses: Platane/snk/svg-only@v3
+      # Step 1: Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js (required for snk)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            # Default light & dark
-            dist/github-contribution-grid-snake.svg?palette=github-light
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+          node-version: "20"
 
-            # 🌸 Dreamy Pastel
-            dist/github-contribution-grid-snake-pastel.svg?palette=#0b0b16,#1a1a2b,#403c64,#94b3fd,#f8c8dc,#d9faff
+      # Step 3: Install snk CLI
+      - name: Install snk
+        run: npm install -g @platane/snk
 
-            # 🌌 Galaxy Glow
-            dist/github-contribution-grid-snake-galaxy.svg?palette=#0a0b1a,#1b1f3a,#2f3c64,#5cb8ff,#b28dff,#8fffff
+      # Step 4: Generate all snake SVGs
+      - name: Generate snake SVGs
+        run: |
+          mkdir -p dist
+          # Default light & dark
+          snk --github-user ${{ github.repository_owner }} --output "dist/github-contribution-grid-snake.svg" --palette github-light
+          snk --github-user ${{ github.repository_owner }} --output "dist/github-contribution-grid-snake-dark.svg" --palette github-dark
 
-            # ⚡ Cyber Neon
-            dist/github-contribution-grid-snake-neon.svg?palette=#050510,#12122a,#1f3b6d,#00d8ff,#ff6ec7,#bfff00
+          # Custom palettes
+          declare -A palettes=(
+            ["pastel"]="#0b0b16,#1a1a2b,#403c64,#94b3fd,#f8c8dc,#d9faff"
+            ["galaxy"]="#0a0b1a,#1b1f3a,#2f3c64,#5cb8ff,#b28dff,#8fffff"
+            ["neon"]="#050510,#12122a,#1f3b6d,#00d8ff,#ff6ec7,#bfff00"
+            ["moonlight"]="#0a0b1a,#1c1e2b,#2f3c64,#6ed4ff,#c0a6ff,#9fffff"
+          )
 
-            # 🌙 Moonlight (your dark-mode theme)
-            dist/github-contribution-grid-snake-moonlight.svg?palette=#0a0b1a,#1c1e2b,#2f3c64,#6ed4ff,#c0a6ff,#9fffff
+          for name in "${!palettes[@]}"; do
+            snk --github-user ${{ github.repository_owner }} \
+                --output "dist/github-contribution-grid-snake-$name.svg" \
+                --palette "${palettes[$name]}"
+          done
 
-
-      # Step 2: Upload as artifact (optional, for debugging)
+      # Step 5: Upload artifact (optional)
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: snake
           path: dist
 
-      # Step 3: Push to output 
+      # Step 6: Push to output branch
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v4
         with:
